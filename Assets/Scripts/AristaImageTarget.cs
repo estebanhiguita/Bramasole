@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Tatacoa;
 
-public class AristaImageTarget : ITrackableEventHandler 
+public class AristaImageTarget : MonoBehaviour, ITrackableEventHandler 
 {
 	public TrackableBehaviour trackable;
 	public ImageTracker imageTracker;
 	public DataSet dataSet;
+
+	public GameObject canvas;
 
 
 	public bool targetFound = false;
@@ -21,6 +23,16 @@ public class AristaImageTarget : ITrackableEventHandler
 	public void Start ()
 	{
 
+	}
+
+	void OnTargetFound ()
+	{
+		canvas.SetActive (true);
+	}
+
+	void OnTargetLost ()
+	{
+		canvas.SetActive (false);
 	}
 
 	public bool TRACK = false;
@@ -41,11 +53,11 @@ public class AristaImageTarget : ITrackableEventHandler
 		    newStatus == TrackableBehaviour.Status.TRACKED ||
 		    newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED )
 		{
-
+			OnTargetFound();
 		}
 		else
 		{
-
+			OnTargetLost();
 		}
 	}
 
